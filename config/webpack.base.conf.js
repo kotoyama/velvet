@@ -1,10 +1,10 @@
-import path from "path";
-import fs from "fs";
+const path = require("path");
+const fs = require("fs");
 
-import { CleanWebpackPlugin } from "clean-webpack-plugin";
-import { MiniCssExtractPlugin } from "mini-css-extract-plugin";
-import { CopyWebpackPlugin } from "copy-webpack-plugin";
-import { HtmlWebpackPlugin } from "html-webpack-plugin";
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 const PATHS = {
   src: path.resolve(__dirname, "../src"),
@@ -43,20 +43,20 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.ts$/,
+        test: /\.(js|jsx|tsx|ts)$/,
         exclude: /node_modules/,
-        loader: "ts-loader",
+        loader: "babel-loader",
       },
       {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-        loader: "file-loader",
+        loader: "url-loader",
         options: {
           name: "[name].[ext]",
         },
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-        loader: "file-loader",
+        loader: "url-loader",
         options: {
           name: "[name].[ext]",
         },
@@ -64,7 +64,6 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
-          "style-loader",
           MiniCssExtractPlugin.loader,
           {
             loader: "css-loader",
@@ -76,9 +75,6 @@ module.exports = {
             loader: "postcss-loader",
             options: {
               sourceMap: true,
-              config: {
-                path: `./postcss.config.js`,
-              },
             },
           },
         ],
@@ -86,7 +82,6 @@ module.exports = {
       {
         test: /\.scss$/,
         use: [
-          "style-loader",
           MiniCssExtractPlugin.loader,
           {
             loader: "css-loader",
@@ -104,9 +99,6 @@ module.exports = {
             loader: "postcss-loader",
             options: {
               sourceMap: true,
-              config: {
-                path: `./postcss.config.js`,
-              },
             },
           },
         ],
@@ -114,13 +106,13 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: [".ts", ".tsx", ".js"],
+    modules: [PATHS.src, "node_modules"],
+    extensions: ["*", ".js", ".jsx", ".tsx", ".ts"],
   },
   plugins: [
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: `${PATHS.assets}css/[name].[contenthash].css`,
-      allChunks: true,
     }),
     new CopyWebpackPlugin({
       patterns: [
@@ -131,10 +123,6 @@ module.exports = {
         {
           from: `${PATHS.src}/${PATHS.assets}fonts`,
           to: `${PATHS.assets}fonts`,
-        },
-        {
-          from: `${PATHS.src}/static`,
-          to: "",
         },
       ],
     }),

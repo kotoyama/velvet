@@ -1,6 +1,6 @@
-@import "utils/vars";
-@import "utils/reset";
-@import "utils/fonts";
+@import "./utils/vars.scss";
+@import "./utils/reset.scss";
+@import "./utils/fonts.scss";
 
 html {
   line-height: $mainLineHeight;
@@ -106,10 +106,4 @@ section,
   @media screen and (max-width: $phoneWidth) {
     max-width: $smPhoneWidth;
   }
-}
-
-.main-content {
-  margin-left: 250px;
-  padding    : 16px;
-  height     : calc(100vh - 72px);
 }
