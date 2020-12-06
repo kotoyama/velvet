@@ -43,9 +43,9 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(js|jsx|tsx|ts)$/,
+        test: /\.(js|ts)$/,
         exclude: /node_modules/,
-        loader: "babel-loader",
+        loader: "ts-loader",
       },
       {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
@@ -107,7 +107,7 @@ module.exports = {
   },
   resolve: {
     modules: [PATHS.src, "node_modules"],
-    extensions: ["*", ".js", ".jsx", ".tsx", ".ts"],
+    extensions: ["*", ".js", ".ts"],
   },
   plugins: [
     new CleanWebpackPlugin(),

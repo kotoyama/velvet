@@ -40,7 +40,7 @@ export interface MountedVNode extends VNode {
 
 export type Tag = string;
 export type Props = {
-  [propName: string]: string;
+  [propName: string]: any;
 };
 export type Children = VNode[] | string;
 export type MountedChildren = MountedVNode[] | string;

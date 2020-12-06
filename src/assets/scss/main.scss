@@ -57,38 +57,16 @@ li {
   list-style-type: none;
 }
 
-section,
-.section {
-  position: relative;
-  padding : 40px 0;
-
-  @media screen and (max-width: $smDesktopWidth) {
-    padding: 36px 0;
-  }
-
-  @media screen and (max-width: $tableWidth) {
-    padding: 28px 0;
-  }
-
-  @media screen and (max-width: $phoneWidth) {
-    padding: 20px 0;
-  }
-}
-
-.wrapper {
+#app {
   display       : flex;
   flex-direction: column;
   margin        : 0 auto;
   min-height    : 100vh;
 }
 
-.wrapper-content {
-  display       : flex;
-  flex-direction: column;
-  padding-top   : 40px;
-}
-
-.container {
+.container1,
+.container2,
+.container3 {
   width    : 100%;
   flex     : 0 0 auto;
   position : relative;

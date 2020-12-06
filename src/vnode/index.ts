@@ -15,6 +15,7 @@ export function mount(vNode: VNode, container: NodeContainer): void {
   Object.entries(vNode.props).forEach(([name, value]) =>
     el.setAttribute(name, value)
   );
+  patchProps(el, {}, vNode.props);
   if (typeof vNode.children === "string") {
     el.textContent = vNode.children;
   } else {
@@ -73,4 +74,45 @@ export function patch(n1: MountedVNode, n2: MountedVNode): void {
   if (c1.length < c2.length) {
     c2.slice(c1.length).forEach((c) => mount(c, el));
   }
+}
+
+export function listener(event: Event): EventListener {
+  return this[event.type](event);
+}
+
+export function patchProp(
+  node: HTMLElement,
+  key: string,
+  value: string,
+  nextValue: string
+): void {
+  if (key.startsWith("on")) {
+    const eventName = key.slice(2);
+    (node as any)[eventName] = nextValue;
+
+    if (!nextValue) {
+      node.removeEventListener(eventName, listener);
+    } else if (!value) {
+      node.addEventListener(eventName, listener);
+    }
+    return;
+  }
+  if (!nextValue) {
+    node.removeAttribute(key);
+    return;
+  }
+  node.setAttribute(key, nextValue);
+}
+
+export function patchProps(
+  node: HTMLElement,
+  props: Props | null,
+  nextProps: Props | null
+): void {
+  const mergedProps = { ...props, ...nextProps };
+  Object.keys(mergedProps).forEach((key) => {
+    if (props[key] !== nextProps[key]) {
+      patchProp(node, key, props[key], nextProps[key]);
+    }
+  });
 }

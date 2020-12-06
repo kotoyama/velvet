@@ -8,7 +8,7 @@ coverage
 .DS_Store
 
 # Production
-/dist
+/public
 
 # Log files
 npm-debug.log*

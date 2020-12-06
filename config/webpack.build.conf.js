@@ -1,11 +1,11 @@
-import merge from "webpack-merge";
-import baseWebpackConfig from "./webpack.base.conf";
+const { merge } = require("webpack-merge");
+const baseWebpackConfig = require("./webpack.base.conf");
 
 const buildWebpackConfig = merge(baseWebpackConfig, {
   mode: "production",
   plugins: [],
 });
 
-export default new Promise((resolve) => {
+module.exports = new Promise((resolve) => {
   resolve(buildWebpackConfig);
 });
