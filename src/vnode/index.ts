@@ -32,6 +32,7 @@ export function unmount(vNode: MountedVNode): void {
 
 export function patch(n1: MountedVNode, n2: MountedVNode): void {
   const el = (n2.el = n1.el);
+
   if (!el.parentNode) {
     throw new Error(`Parent of ${n1} was not found`);
   }
@@ -39,7 +40,6 @@ export function patch(n1: MountedVNode, n2: MountedVNode): void {
   if (n1.sameTagWith(n2)) {
     mount(n2, el.parentNode);
     unmount(n1);
-
     return;
   }
 
@@ -54,15 +54,18 @@ export function patch(n1: MountedVNode, n2: MountedVNode): void {
     c2.forEach((c) => patch(n1, c));
     return;
   }
+
   const c1 = n1.children;
   const commonLength = Math.min(c1.length, c2.length);
 
   for (let i = 0; i < commonLength; i++) {
     patch(c1[i], c2[i]);
   }
+
   if (c2.length < c1.length) {
     c1.slice(c2.length).forEach(unmount);
   }
+
   if (c1.length < c2.length) {
     c2.slice(c1.length).forEach((c) => mount(c, el));
   }
