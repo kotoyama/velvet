@@ -3,7 +3,7 @@ import { Children, VNode } from "vnode/types";
 import { reactive } from "reactivity/reactive";
 import { watchEffect } from "reactivity/effect";
 
-const Button = (text: string, onclick: () => any) => {
+const Button = (text: string, onclick: () => string | number) => {
   return h("button", { onclick }, text);
 };
 
