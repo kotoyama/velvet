@@ -4,12 +4,10 @@ export interface NodeContainer {
   appendChild(el: HTMLElement): void;
 }
 
-// create a virtual node (but dont mount it)
 export function h(tag: Tag, props: Props | null, children: Children): VNode {
   return VNode.valueOf(tag, props, children);
 }
 
-// mount a virtual node to the DOM
 export function mount(vNode: VNode, container: NodeContainer): void {
   const el = vNode.recreateDOM().el;
   Object.entries(vNode.props).forEach(([name, value]) =>
@@ -24,7 +22,6 @@ export function mount(vNode: VNode, container: NodeContainer): void {
   container.appendChild(el);
 }
 
-// unmount vnode from the DOM
 export function unmount(vNode: MountedVNode): void {
   const parent = vNode.el.parentNode;
   if (parent) {
@@ -34,7 +31,6 @@ export function unmount(vNode: MountedVNode): void {
   }
 }
 
-// takes 2 nodes, compares them and figures out the difference
 export function patch(n1: MountedVNode, n2: MountedVNode): void {
   const el = (n2.el = n1.el);
 
